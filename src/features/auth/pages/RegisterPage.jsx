@@ -8,9 +8,10 @@ const RegisterPage = () => {
     email: "",
     first_name: "",
     last_name: "",
-    password: "",
     phone_number: "",
-    role: "user", // Giá trị mặc định theo Backend của bạn
+    role: "user",
+    password: "",
+    confirmPassword: "",
   });
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,8 +26,12 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setIsSubmitting(true);
 
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match. Please check again."); // Thông báo lỗi
+      return;
+    }
+    setIsSubmitting(true);
     try {
       // Gọi hàm register đã định nghĩa trong Providers
       await register(formData);
@@ -35,7 +40,6 @@ const RegisterPage = () => {
       alert("Sign Up Successfully! Please Login");
       navigate("/login");
     } catch (err) {
-      // Hiển thị lỗi từ Backend (ví dụ: Username đã tồn tại)
       setError(
         err.response?.data?.detail || "Failed to SignUp. Please try again!"
       );
@@ -92,6 +96,13 @@ const RegisterPage = () => {
           onChange={handleChange}
           required
         />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          onChange={handleChange}
+          required
+        />
 
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Processing..." : "Sign Up"}
@@ -99,9 +110,7 @@ const RegisterPage = () => {
       </form>
 
       <p>
-        <Link id="login-link" to="/login">
-          Login
-        </Link>
+        <Link to="/login">Login</Link>
       </p>
     </div>
   );
