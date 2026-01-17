@@ -7,7 +7,7 @@ const LoginPage = () => {
     const savedUser = localStorage.getItem("rememberedUser");
     const savedPassword = localStorage.getItem("rememberedUserPassword");
     return {
-      username: savedUser || "", 
+      username: savedUser || "",
       password: savedPassword || "",
     };
   });
@@ -15,7 +15,7 @@ const LoginPage = () => {
 
   const { login } = useAuth();
   const [rememberMe, setRememberMe] = useState(() => {
-    return !!localStorage.getItem("rememberedUser"); 
+    return !!localStorage.getItem("rememberedUser");
   });
   const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen  flex flex-col justify-center py-12 sm:px-6 lg:px-8  bg-indigo-700">
-      <div className="w-full max-w-md m-auto bg-indigo-100 rounded-lg p-5 ">
+      <div className="w-full max-w-md m-auto bg-indigo-100 rounded-2xl p-5 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <header>
             <h2 class="mt-6 text-center text-3xl font-extrabold text-grey-100 mb-2">
@@ -69,9 +69,9 @@ const LoginPage = () => {
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div>
-            <label className="block mb-2 text-indigo-500" for="username">
+            <label className="block mb-2 text-indigo-500" htmlFor="username">
               Username
             </label>
             <input
@@ -79,12 +79,13 @@ const LoginPage = () => {
               type="text"
               name="username"
               value={formData.username}
+              autoComplete="one-time-code"
               onChange={handleChange}
               required
             ></input>
           </div>
           <div>
-            <label className="block mb-2 text-indigo-500" for="password">
+            <label className="block mb-2 text-indigo-500" htmlFor="password">
               Password
             </label>
             <input
@@ -92,6 +93,7 @@ const LoginPage = () => {
               type="password"
               name="password"
               value={formData.password}
+              autoComplete="new-password"
               onChange={handleChange}
               required
             ></input>
@@ -120,10 +122,10 @@ const LoginPage = () => {
               Forgot your Password?
             </a>
           </div>
-          <div>
+          <div className="flex justify-center w-full mt-6">
             <button
-              className="w-full bg-indigo-700 hover:bg-pink-700 text-white font-bold py-2 px-4 mb-4 rounded transition duration-200"
               type="submit"
+              className="w-2/3 bg-indigo-700 hover:bg-pink-700 text-white font-extrabold py-3 px-6 rounded-xl shadow-lg transform transition hover:scale-105 active:scale-95 duration-200 disabled:opacity-50"
             >
               Login
             </button>
