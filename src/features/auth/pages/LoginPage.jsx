@@ -46,7 +46,7 @@ const LoginPage = () => {
       navigate("/");
     } catch (err) {
       setError(
-        "Authentication failed. Please verify your account information."
+        "Authentication failed. Please verify your account information.",
       );
       console.error(err);
     }
@@ -63,7 +63,7 @@ const LoginPage = () => {
             <img
               className="w-20 mx-auto mb-5"
               src="https://img.icons8.com/fluent/344/shopping-bag.png"
-              alt="handshake"
+              alt="shopping-bag"
             />
           </header>
         </div>
@@ -75,7 +75,7 @@ const LoginPage = () => {
               Username
             </label>
             <input
-              className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+              className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-600 outline-none focus:bg-gray-300"
               type="text"
               name="username"
               value={formData.username}
@@ -89,7 +89,7 @@ const LoginPage = () => {
               Password
             </label>
             <input
-              className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+              className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-600 outline-none focus:bg-gray-300"
               type="password"
               name="password"
               value={formData.password}
@@ -106,7 +106,7 @@ const LoginPage = () => {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={handleRememberChange}
-                className="h-4 w-4 text-indigo-600 accent-indigo-700 focus:ring-indigo-500 border-gray-300 rounded"
+                className="h-4 w-4 text-indigo-500 accent-indigo-700 focus:ring-indigo-500 border-gray-300 rounded"
               />
               <label
                 htmlFor="remember"
@@ -116,7 +116,7 @@ const LoginPage = () => {
               </label>
             </div>
             <a
-              className="text-indigo-700 hover:text-pink-700 text-sm "
+              className="text-indigo-700 hover:text-indigo-500 text-sm "
               href="#"
             >
               Forgot your Password?
@@ -125,7 +125,7 @@ const LoginPage = () => {
           <div className="flex justify-center w-full mt-6">
             <button
               type="submit"
-              className="w-2/3 bg-indigo-700 hover:bg-pink-700 text-white font-extrabold py-3 px-6 rounded-xl shadow-lg transform transition hover:scale-105 active:scale-95 duration-200 disabled:opacity-50"
+              className="w-2/3 bg-indigo-700 hover:text-indigo-500 text-white font-extrabold py-3 px-6 rounded-xl shadow-lg transform transition hover:scale-105 active:scale-95 duration-200 disabled:opacity-50"
             >
               Login
             </button>
@@ -183,7 +183,7 @@ const LoginPage = () => {
         </div>
         <footer className="pt-2 text-center justify-center ">
           <Link
-            className="text-indigo-700 hover:text-pink-700 text-sm "
+            className="text-indigo-700 hover:text-indigo-500 text-sm "
             to="/register"
           >
             👉Create New Account👈

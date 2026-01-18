@@ -53,7 +53,7 @@ const RegisterPage = () => {
       navigate("/login");
     } catch (err) {
       setError(
-        err.response?.data?.detail || "Failed to SignUp. Please try again!"
+        err.response?.data?.detail || "Failed to SignUp. Please try again!",
       );
     } finally {
       setIsSubmitting(false);
@@ -71,7 +71,7 @@ const RegisterPage = () => {
             <img
               className="w-20 mx-auto mb-3"
               src="https://img.icons8.com/fluent/344/shopping-bag.png"
-              alt="handshake"
+              alt="shopping-bag"
             />
           </header>
         </div>
@@ -82,7 +82,7 @@ const RegisterPage = () => {
           <p className="text-center">
             <Link
               to="/login"
-              className="inline-block p-1 mb-3 text-indigo-700 font-medium hover:text-pink-700 outline-none transition duration-200"
+              className="inline-block p-1 mb-3 text-indigo-700 font-medium hover:text-indigo-500 outline-none transition duration-200"
             >
               Already have an account?
             </Link>
@@ -176,7 +176,7 @@ const RegisterPage = () => {
                 <span
                   className={`text-xs font-medium ${strengthConfig.color.replace(
                     "bg-",
-                    "text-"
+                    "text-",
                   )}`}
                 >
                   {strengthConfig.text}
@@ -208,7 +208,7 @@ const RegisterPage = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-2/3 bg-indigo-700 hover:bg-pink-700 text-white font-extrabold py-3 px-6 rounded-xl shadow-lg transform transition hover:scale-105 active:scale-95 duration-200 disabled:opacity-50"
+              className="w-2/3 bg-indigo-700 hover:text-indigo-500 text-white font-extrabold py-3 px-6 rounded-xl shadow-lg transform transition hover:scale-105 active:scale-95 duration-200 disabled:opacity-50"
             >
               {isSubmitting ? "Processing..." : "Sign Up"}
             </button>
