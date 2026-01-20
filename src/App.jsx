@@ -1,4 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
+import SearchBar from "./components/ui/searchBar";
 
 function App() {
   return (
@@ -9,16 +10,16 @@ function App() {
         <div>
           <nav className="max-w-7xl mx-auto flex justify-end gap-4 px-6 py-2 text-sm">
             <Link to="/" className="hover:text-orange-400">
-              Trang Chủ
+              Home
             </Link>
             <Link to="/login" className="hover:text-orange-400">
-              Đăng Nhập
+              Login
             </Link>
             <Link to="/register" className="hover:text-orange-400">
-              Đăng Ký
+              Register
             </Link>
             <Link to="/product/1" className="hover:text-orange-400">
-              Test SP ID 1
+              Test Product
             </Link>
           </nav>
         </div>
@@ -36,22 +37,7 @@ function App() {
           </div>
 
           {/* SEARCH */}
-          <div className="flex-1">
-            <div className="relative w-full ">
-              <input
-                type="text"
-                placeholder="Tìm kiếm sản phẩm..."
-                className="w-full pl-4 pr-14 py-3 rounded-md text-gray-700 focus:outline-none"
-              />
-              <button
-                className="absolute right-2 top-1/2 -translate-y-1/2
-                       bg-indigo-600 hover:bg-indigo-500
-                       px-6 py-2 rounded-md text-white"
-              >
-                🔍
-              </button>
-            </div>
-          </div>
+          <SearchBar />
 
           {/* CART ICON */}
           <div className="shrink-0">

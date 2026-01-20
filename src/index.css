@@ -25,6 +25,16 @@
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
   }
+} /* Dành cho Chrome, Safari, Edge và Opera */
+input.no-spinner::-webkit-outer-spin-button,
+input.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Dành cho Firefox */
+input.no-spinner[type="number"] {
+  -moz-appearance: textfield;
 }
 
 @layer base {
