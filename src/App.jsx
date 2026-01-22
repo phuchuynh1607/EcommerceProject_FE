@@ -1,7 +1,17 @@
 import { Outlet, Link } from "react-router-dom";
-import SearchBar from "./components/ui/searchBar";
+import { useAuth } from "./features/auth/hooks/useAuth";
+import MainNav from "./components/ui/MainNav";
 
 function App() {
+  const { user, logout } = useAuth();
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      // Chào tạm biệt trước khi xóa dữ liệu user
+      alert(`Goodbye ${user?.username || "User"}, see you again!`);
+      logout(); // Sau đó mới gọi hàm logout để xóa token/state
+    }
+  };
   return (
     <div>
       {/* HEADER */}
@@ -12,51 +22,74 @@ function App() {
             <Link to="/" className="hover:text-orange-400">
               Home
             </Link>
-            <Link to="/login" className="hover:text-orange-400">
-              Login
-            </Link>
-            <Link to="/register" className="hover:text-orange-400">
-              Register
-            </Link>
-            <Link to="/product/1" className="hover:text-orange-400">
-              Test Product
-            </Link>
+
+            {!user ? (
+              <>
+                <Link to="/login" className="hover:text-orange-400">
+                  Login
+                </Link>
+                <Link to="/register" className="hover:text-orange-400">
+                  Register
+                </Link>
+              </>
+            ) : (
+              <>
+                <div className="relative group">
+                  {/* Button giữ nguyên logic của bạn */}
+                  <button className="inline-flex items-center text-white hover:text-orange-400 focus:outline-none transition-colors font-medium">
+                    {user.username}
+                    <svg
+                      className="ml-1 h-4 w-4 transition-transform group-hover:rotate-180"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+
+                  {/* DROP DOWN MENU - THAY ĐỔI Ở ĐÂY */}
+                  <div
+                    className="absolute left-0 mt-2 py-2 w-40 bg-white shadow-xl rounded-md border border-gray-100 
+                  /* Trạng thái mặc định: Ẩn và đẩy xuống một chút */
+                  opacity-0 invisible translate-y-2 
+                  /* Trạng thái khi Hover: Hiện và trượt lên lại */
+                  group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 
+                  /* Thời gian và kiểu chuyển động */
+                  transition-all duration-300 ease-out z-50"
+                  >
+                    <Link
+                      to="/about"
+                      className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    >
+                      My Account
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    >
+                      My Purchase
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className=" px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </nav>
         </div>
 
         {/* MAIN HEADER */}
-        <div className="max-w-7xl mx-auto flex items-center gap-10 px-6 py-4">
-          {/* LOGO */}
-          <div className="flex items-center gap-3 shrink-0">
-            <img
-              className="w-16 h-16"
-              src="https://img.icons8.com/fluent/344/shopping-bag.png"
-              alt="shopping-bag"
-            />
-            <span className="text-2xl font-bold tracking-wide">Ecm</span>
-          </div>
-
-          {/* SEARCH */}
-          <SearchBar />
-
-          {/* CART ICON */}
-          <div className="shrink-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 48 48"
-              className="w-12 h-12 stroke-white fill-none"
-            >
-              <path
-                d="M6 6h4l5 22h18l4-14H14"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="20" cy="38" r="3" fill="white" />
-              <circle cx="34" cy="38" r="3" fill="white" />
-            </svg>
-          </div>
-        </div>
+        <MainNav />
       </header>
 
       {/* App.jsx */}

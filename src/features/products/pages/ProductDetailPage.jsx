@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useProductDetail } from "../hooks/useProductDetail";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { Star, ShoppingCart, CreditCard } from "lucide-react"; // Dùng icon cho chuyên nghiệp
+import { useCart } from "../../cart/hooks/useCart";
+import AddToCartModal from "../../cart/components/AddToCartModal";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -10,6 +12,16 @@ const ProductDetailPage = () => {
   const { product, loading, error } = useProductDetail(id);
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
+  const { addToCart, isModalOpen, setIsModalOpen } = useCart();
+
+  const handleAddToCart = () => {
+    if (!user) {
+      alert("Please login to add this item to your cart!");
+      navigate("/login");
+      return;
+    }
+    addToCart(product.id, quantity);
+  };
   const handleIncrement = () => {
     if (quantity < product.stock) {
       setQuantity((prev) => prev + 1);
@@ -31,21 +43,6 @@ const ProductDetailPage = () => {
     } else {
       setQuantity(value);
     }
-  };
-
-  const handleAddToCart = () => {
-    if (!user) {
-      alert("Please log in to add items to your cart.");
-      navigate("/login", { state: { from: window.location.pathname } });
-      return;
-    }
-
-    if (product?.stock <= 0) {
-      alert("This product is already out of stock!");
-      return;
-    }
-
-    alert(`Successfully added ${product.title} to your cart!`);
   };
 
   if (loading) {
@@ -155,8 +152,8 @@ const ProductDetailPage = () => {
                     id="quantity"
                     name="quantity"
                     min="1"
-                    value={quantity} // Kết nối với State
-                    onChange={handleInputChange} // Cho phép gõ số
+                    value={quantity}
+                    onChange={handleInputChange}
                     class="no-spinner w-16 text-center rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
                   />
 
@@ -183,18 +180,15 @@ const ProductDetailPage = () => {
             <div className="mt-auto flex flex-wrap gap-4">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 min-w-[200px] flex items-center justify-center gap-2 bg-indigo-50 text-indigo-700 border border-indigo-700 py-3 rounded-sm font-medium hover:bg-indigo-200 transition"
+                className="flex-1 min-w-[200px] flex items-center justify-center gap-2 bg-indigo-500 text-indigo-50 border border-indigo-500 py-3 rounded-sm font-medium hover:bg-indigo-700 transition"
               >
                 <ShoppingCart size={20} />
                 Add to Cart
               </button>
-              <button
-                onClick={handleAddToCart}
-                className="flex-1 min-w-[200px] flex items-center justify-center gap-2 bg-indigo-600 text-white py-3 rounded-sm font-medium hover:bg-indigo-700 transition shadow-md"
-              >
-                <CreditCard size={20} />
-                Buy now
-              </button>
+              <AddToCartModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+              />
             </div>
           </div>
         </div>

@@ -33,6 +33,7 @@ const LoginPage = () => {
     setError(null);
     try {
       await login(formData.username, formData.password);
+      alert(`Login successful! Welcome ${formData.username}`);
       if (rememberMe) {
         // Lưu tên đăng nhập để lần sau tự điền
         localStorage.setItem("rememberedUser", formData.username);
