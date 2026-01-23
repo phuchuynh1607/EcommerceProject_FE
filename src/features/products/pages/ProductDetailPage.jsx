@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useProductDetail } from "../hooks/useProductDetail";
-import { useAuth } from "@/features/auth/hooks/useAuth";
-import { Star, ShoppingCart, CreditCard } from "lucide-react"; // Dùng icon cho chuyên nghiệp
-import { useCart } from "../../cart/hooks/useCart";
+import { Star, ShoppingCart } from "lucide-react";
 import AddToCartModal from "../../cart/components/AddToCartModal";
+import { useCart } from "../../cart/hooks/useCart";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { product, loading, error } = useProductDetail(id);
-  const { user } = useAuth();
+  const { product, loading: productLoading, error } = useProductDetail(id);
   const [quantity, setQuantity] = useState(1);
-  const { addToCart, isModalOpen, setIsModalOpen } = useCart();
+  const {
+    addToCart,
+    isModalOpen,
+    setIsModalOpen,
+    loading: cartLoading,
+  } = useCart();
 
-  const handleAddToCart = () => {
-    if (!user) {
-      alert("Please login to add this item to your cart!");
-      navigate("/login");
-      return;
-    }
+  const handleAddToCart = async () => {
     addToCart(product.id, quantity);
   };
   const handleIncrement = () => {
@@ -45,7 +43,7 @@ const ProductDetailPage = () => {
     }
   };
 
-  if (loading) {
+  if (productLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
@@ -180,10 +178,22 @@ const ProductDetailPage = () => {
             <div className="mt-auto flex flex-wrap gap-4">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 min-w-[200px] flex items-center justify-center gap-2 bg-indigo-500 text-indigo-50 border border-indigo-500 py-3 rounded-sm font-medium hover:bg-indigo-700 transition"
+                disabled={cartLoading} // Vô hiệu hóa khi đang xử lý request
+                className={`flex-1 min-w-[200px] flex items-center justify-center gap-2 py-3 rounded-sm font-medium transition
+                  ${
+                    cartLoading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-indigo-500 text-indigo-50 hover:bg-indigo-700"
+                  }`}
               >
-                <ShoppingCart size={20} />
-                Add to Cart
+                {cartLoading ? (
+                  <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+                ) : (
+                  <>
+                    <ShoppingCart size={20} />
+                    Add to Cart
+                  </>
+                )}
               </button>
               <AddToCartModal
                 isOpen={isModalOpen}

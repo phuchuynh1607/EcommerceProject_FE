@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AuthContext } from "@/features/auth/store/auth.store";
+import { AuthContext } from "@/features/auth/Context/AuthContext";
 import {
   loginUser,
   fetchUserProfile,

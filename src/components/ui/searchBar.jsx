@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from "react";
+import { ProductContext } from "@/features/products/Context/ProductContext";
 
-const SearchBar = ({ placeholder = "Tìm kiếm sản phẩm...", onSearch }) => {
+const SearchBar = () => {
   const [keyword, setKeyword] = useState("");
-  const navigate = useNavigate();
+  const { setFilters } = useContext(ProductContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!keyword.trim()) return;
-
-    // Nếu bạn truyền prop onSearch, nó sẽ chạy (dành cho xử lý tại chỗ)
-    if (onSearch) {
-      onSearch(keyword);
-    } else {
-      // Mặc định: Chuyển hướng sang trang search với query param
-      navigate(`/search?q=${encodeURIComponent(keyword.trim())}`);
-    }
+    // Cập nhật search mà vẫn giữ nguyên các filter khác như category
+    setFilters((prev) => ({ ...prev, search: keyword.trim() }));
   };
 
   return (
@@ -25,7 +18,7 @@ const SearchBar = ({ placeholder = "Tìm kiếm sản phẩm...", onSearch }) =>
           type="text"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          placeholder={placeholder}
+          placeholder="Type what you're seeking here"
           className="w-full pl-4 pr-14 py-3 rounded-md text-gray-700 focus:outline-none shadow-sm border border-transparent focus:border-indigo-300 transition-all"
         />
         <button

@@ -1,17 +1,14 @@
-import React from "react";
-import ProductCard from "../components/ProductCard";
 import { useProducts } from "../hooks/useProducts";
-import { useNavigate } from "react-router-dom";
-
+import ProductSidebar from "../components/ProductSideBar";
+import ProductGrid from "../components/ProductGrid";
+import { useState } from "react";
 const ProductListPage = () => {
-  // Lấy dữ liệu thật từ Hook kết nối với FastAPI
-  const { products, loading, error } = useProducts();
-  const navigate = useNavigate();
-  const handleLoginRedirect = () => {
-    navigate("/login");
-  };
+  const [filterArgs, setFilterArgs] = useState({
+    search: "",
+    category: "",
+  });
+  const { products, loading, error } = useProducts(filterArgs);
 
-  // Hiển thị trạng thái đang tải
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
@@ -39,42 +36,26 @@ const ProductListPage = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4 ">
-        <div className="mb-4 bg-indigo-700 shadow-sm border-b-2 border-indigo-500 rounded-lg">
-          <div className="flex justify-center items-center py-4">
-            <h2 className="text-xl font-bold text-white uppercase tracking-widest">
-              Recommended for you
-            </h2>
-          </div>
+    <div className="max-w-7xl mx-auto flex gap-6 py-8 px-6">
+      {/* SIDEBAR - 20% width */}
+      <aside className="w-1/5 shrink-0">
+        <ProductSidebar filterArgs={filterArgs} setFilterArgs={setFilterArgs} />
+      </aside>
+
+      {/* MAIN CONTENT - 80% width */}
+      <main className="flex-1">
+        <div className="mb-6 flex justify-between items-center bg-gray-100 p-4 rounded">
+          <span className="text-sm font-medium">Filter by:</span>
+          {/* Các nút bấm Sort giống Shopee */}
         </div>
 
-        {products.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-lg shadow-sm">
-            <p className="text-gray-500">
-              Oops! Our shelves are empty for now. Please check back later!
-            </p>
-          </div>
+        {loading ? (
+          <div className="text-center py-20">Loading...</div>
         ) : (
-          /* Lưới sản phẩm - Tự động thay đổi số cột theo màn hình */
-          <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
-            {products.map((item) => (
-              <ProductCard key={item.id} product={item} />
-            ))}
-          </div>
+          <ProductGrid products={products} />
         )}
-
-        <div className="mt-12 flex justify-center">
-          <button
-            onClick={handleLoginRedirect}
-            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-bold shadow-lg transition-all transform hover:scale-105"
-          >
-            Login to see more
-          </button>
-        </div>
-      </div>
+      </main>
     </div>
   );
 };
-
 export default ProductListPage;

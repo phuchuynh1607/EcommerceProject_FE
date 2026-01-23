@@ -1,17 +1,15 @@
 import axios from "@/lib/axios";
 
 // Lấy danh sách tất cả sản phẩm
-export const getProducts = async () => {
-  try {
-    const response = await axios.get("/products/");
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Get Products Failed!",
-      error.response?.data || error.message,
-    );
-    throw error;
-  }
+export const getProducts = async (filters = {}) => {
+  const params = new URLSearchParams();
+
+  // Tích hợp Search và Category hiện có của bạn
+  if (filters.search) params.append("search", filters.search);
+  if (filters.category) params.append("category", filters.category);
+
+  const response = await axios.get(`/products/?${params.toString()}`);
+  return response.data;
 };
 
 // Lấy chi tiết một sản phẩm theo ID
