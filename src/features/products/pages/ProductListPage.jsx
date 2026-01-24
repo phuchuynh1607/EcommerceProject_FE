@@ -1,13 +1,10 @@
-import { useProducts } from "../hooks/useProducts";
+import { ProductContext } from "../Context/ProductContext";
 import ProductSidebar from "../components/ProductSideBar";
 import ProductGrid from "../components/ProductGrid";
-import { useState } from "react";
+import { useContext } from "react";
 const ProductListPage = () => {
-  const [filterArgs, setFilterArgs] = useState({
-    search: "",
-    category: "",
-  });
-  const { products, loading, error } = useProducts(filterArgs);
+  const { products, loading, error, filters, setFilters } =
+    useContext(ProductContext);
 
   if (loading) {
     return (
@@ -39,13 +36,15 @@ const ProductListPage = () => {
     <div className="max-w-7xl mx-auto flex gap-6 py-8 px-6">
       {/* SIDEBAR - 20% width */}
       <aside className="w-1/5 shrink-0">
-        <ProductSidebar filterArgs={filterArgs} setFilterArgs={setFilterArgs} />
+        <ProductSidebar filters={filters} setFilters={setFilters} />
       </aside>
 
       {/* MAIN CONTENT - 80% width */}
       <main className="flex-1">
         <div className="mb-6 flex justify-between items-center bg-gray-100 p-4 rounded">
-          <span className="text-sm font-medium">Filter by:</span>
+          <span className="text-sm font-medium">
+            Filter by : {filters.search}
+          </span>
           {/* Các nút bấm Sort giống Shopee */}
         </div>
 

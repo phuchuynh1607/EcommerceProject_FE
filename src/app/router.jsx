@@ -8,6 +8,8 @@ import RegisterPage from "@/features/auth/pages/RegisterPage";
 // Products Features
 import ProductListPage from "@/features/products/pages/ProductListPage";
 import ProductDetailPage from "@/features/products/pages/ProductDetailPage";
+//Cart Features
+import ShoppingCart from "@/features/cart/pages/ShoppingCart";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "product/:id",
         element: <ProductDetailPage />,
+      },
+      {
+        path: "/cart",
+        element: <ShoppingCart />,
       },
     ],
   },

@@ -1,4 +1,4 @@
-const ProductSidebar = ({ filterArgs, setFilterArgs }) => {
+const ProductSidebar = ({ filters, setFilters }) => {
   // Danh sách categories lấy chính xác từ dữ liệu của bạn
   const categories = [
     { id: 1, name: "Men Clothes", value: "men's clothing" },
@@ -9,9 +9,8 @@ const ProductSidebar = ({ filterArgs, setFilterArgs }) => {
 
   const handleCategoryClick = (categoryValue) => {
     // Nếu click lại vào cái đang chọn thì bỏ chọn
-    const newCategory =
-      filterArgs.category === categoryValue ? "" : categoryValue;
-    setFilterArgs({ ...filterArgs, category: newCategory });
+    const newCategory = filters.category === categoryValue ? "" : categoryValue;
+    setFilters({ ...filters, category: newCategory });
   };
 
   return (
@@ -27,7 +26,7 @@ const ProductSidebar = ({ filterArgs, setFilterArgs }) => {
       {/* Body */}
       <ul className="py-3 px-2 space-y-1">
         {categories.map((cat) => {
-          const active = filterArgs.category === cat.value;
+          const active = filters.category === cat.value;
           return (
             <li
               key={cat.id}
@@ -50,10 +49,10 @@ const ProductSidebar = ({ filterArgs, setFilterArgs }) => {
       </ul>
 
       {/* Reset */}
-      {filterArgs.category && (
+      {(filters.category || filters.search) && (
         <div className="px-4 pb-4">
           <button
-            onClick={() => setFilterArgs({ ...filterArgs, category: "" })}
+            onClick={() => setFilters({ ...filters, category: "", search: "" })}
             className="w-full py-1.5 bg-indigo-600 text-md font-medium border border-indigo-700 text-gray-100 hover:bg-indigo-700 rounded-md"
           >
             Reset

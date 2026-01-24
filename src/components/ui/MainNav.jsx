@@ -1,8 +1,21 @@
 import SearchBar from "./searchBar";
 import { Link } from "react-router-dom";
 import { useCart } from "@/features/cart/hooks/useCart";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 const MainNav = ({ isCartPage = false }) => {
   const { uniqueItemCount } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const handleCartClick = (e) => {
+    e.preventDefault();
+    if (!user) {
+      alert("Please login first to use this!");
+      navigate("/login");
+    } else {
+      navigate("/cart");
+    }
+  };
   return (
     <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 gap-10">
       {/* LOGO & TITLE SECTION */}
@@ -33,7 +46,7 @@ const MainNav = ({ isCartPage = false }) => {
       </div>
 
       {!isCartPage && (
-        <div className="group">
+        <div className="group cursor-pointer" onClick={handleCartClick}>
           <div className="relative inline-block">
             <svg
               xmlns="http://www.w3.org/2000/svg"

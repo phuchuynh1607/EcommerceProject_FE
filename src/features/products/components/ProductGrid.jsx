@@ -1,12 +1,14 @@
 import React from "react";
 import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 const ProductGrid = ({ products }) => {
   const navigate = useNavigate();
   const handleLoginRedirect = () => {
     navigate("/login");
   };
+  const { user } = useAuth();
   return (
     <div className="bg-gray-100 min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 ">
@@ -33,14 +35,16 @@ const ProductGrid = ({ products }) => {
           </div>
         )}
 
-        <div className="mt-12 flex justify-center">
-          <button
-            onClick={handleLoginRedirect}
-            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-bold shadow-lg transition-all transform hover:scale-105"
-          >
-            Login to see more
-          </button>
-        </div>
+        {!user && (
+          <div className="mt-12 flex justify-center">
+            <button
+              onClick={handleLoginRedirect}
+              className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-bold shadow-lg transition-all transform hover:scale-105"
+            >
+              Login to see more
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
