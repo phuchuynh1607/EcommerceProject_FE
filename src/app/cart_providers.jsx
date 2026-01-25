@@ -68,17 +68,19 @@ export const CartProvider = ({ children }) => {
   };
   const updateCartQuantity = async (cartId, newQuantity) => {
     if (newQuantity < 1) return;
+
+    const previousItems = [...cartItems];
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === cartId ? { ...item, quantity: newQuantity } : item,
+      ),
+    );
     try {
-      await updateCartApi(cartId, { quantity: newQuantity });
-      // Cập nhật state cục bộ để UI mượt mà (Optimistic Update)
-      setCartItems((prev) =>
-        prev.map((item) =>
-          item.id === cartId ? { ...item, quantity: newQuantity } : item,
-        ),
-      );
+      await updateCartApi(cartId, newQuantity);
     } catch (error) {
       console.error("Update failed:", error);
-      refreshCart(); // Nếu lỗi thì lấy lại dữ liệu chuẩn từ server
+      setCartItems(previousItems);
+      alert("Không thể cập nhật số lượng. Vui lòng thử lại!");
     }
   };
 

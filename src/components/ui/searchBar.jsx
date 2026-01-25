@@ -24,7 +24,7 @@ const SearchBar = () => {
         <button
           type="submit"
           className="absolute right-2 top-1/2 -translate-y-1/2 
-                     bg-indigo-600 hover:bg-indigo-500 
+                     bg-indigo-600 hover:bg-indigo-700 
                      px-6 py-2 rounded-md text-white transition-colors"
         >
           🔍

@@ -27,7 +27,7 @@ export const addToCartApi = async (cartRequest) => {
 export const updateCartQuantity = async (cart_id, quantity) => {
   try {
     const response = await axios.put(`/carts/quantity/${cart_id}`, {
-      quantity,
+      quantity: parseInt(quantity, 10),
     });
     return response.data;
   } catch (error) {
