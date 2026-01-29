@@ -1,4 +1,5 @@
 import axiosClient from "@/lib/axios";
+import axios from "axios";
 
 export const registerUser = async (userData) => {
   try {
@@ -31,22 +32,19 @@ export const loginUser = async (credentials) => {
 };
 
 export const refreshAccessToken = async (refreshToken) => {
-  return await axiosClient.post("/auth/refresh", null, {
+  return axios.post("http://127.0.0.1:8000/auth/refresh", null, {
     params: { refresh_token: refreshToken },
   });
 };
-export const fetchUserProfile = async (token) => {
+export const fetchUserProfile = async () => {
   try {
-    const response = await axiosClient.get("/users/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    // AxiosClient sẽ tự gắn Bearer Token từ interceptor
+    const response = await axiosClient.get("/users/");
     return response.data;
   } catch (error) {
     console.error(
       "Fetch user profile error:",
-      error.response?.data || error.message
+      error.response?.data || error.message,
     );
     throw error;
   }

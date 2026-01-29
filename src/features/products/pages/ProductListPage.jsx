@@ -1,10 +1,10 @@
 import { ProductContext } from "../Context/ProductContext";
 import ProductSidebar from "../components/ProductSideBar";
 import ProductGrid from "../components/ProductGrid";
-import { useContext } from "react";
+import { useProducts } from "../hooks/useProducts";
+
 const ProductListPage = () => {
-  const { products, loading, error, filters, setFilters } =
-    useContext(ProductContext);
+  const { products, loading, error, filters, setFilters } = useProducts();
 
   if (loading) {
     return (

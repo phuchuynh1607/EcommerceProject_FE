@@ -64,7 +64,7 @@ function App() {
                   transition-all duration-300 ease-out z-50"
                   >
                     <Link
-                      to="/about"
+                      to="/user/profile"
                       className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
                     >
                       My Account

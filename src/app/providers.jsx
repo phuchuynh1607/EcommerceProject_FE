@@ -11,20 +11,21 @@ export const Providers = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Kiểm tra trạng thái đăng nhập khi khởi chạy ứng dụng
   useEffect(() => {
     const initAuth = async () => {
       const token = tokenStorage.getAccessToken();
       if (token) {
         try {
-          // Nếu có token, lấy profile để gán vào user
-          const userProfile = await fetchUserProfile(token);
+          const userProfile = await fetchUserProfile();
           setUser(userProfile);
         } catch (error) {
           console.error("Auto login failed:", error);
-          tokenStorage.clearTokens(); // Token lởm thì xóa luôn
+          if (error.response?.status === 401) {
+            tokenStorage.clearTokens();
+          }
         }
       }
+
       setIsLoading(false);
     };
     initAuth();
@@ -49,9 +50,18 @@ export const Providers = ({ children }) => {
     tokenStorage.clearTokens();
     setUser(null);
   };
-
+  const refreshUser = async () => {
+    try {
+      const userProfile = await fetchUserProfile(); // Gọi API lấy thông tin mới nhất
+      setUser(userProfile); // Cập nhật lại state toàn cục
+    } catch (error) {
+      console.error("Refresh user failed", error);
+    }
+  };
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, isLoading }}>
+    <AuthContext.Provider
+      value={{ user, login, register, logout, isLoading, refreshUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
