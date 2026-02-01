@@ -13,7 +13,7 @@ const RegisterPage = () => {
     password: "",
     confirmPassword: "",
   });
-  // Hàm này trả về số lượng ô vuông cần tô màu
+
   const getStrengthConfig = (password) => {
     if (!password) return { color: "bg-gray-300", text: "" };
     if (password.length < 6)
@@ -28,7 +28,7 @@ const RegisterPage = () => {
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { register } = useAuth(); // Lấy hàm register từ Providers
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -40,15 +40,13 @@ const RegisterPage = () => {
     setError(null);
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match. Please check again."); // Thông báo lỗi
+      setError("Passwords do not match. Please check again.");
       return;
     }
     setIsSubmitting(true);
     try {
-      // Gọi hàm register đã định nghĩa trong Providers
       await register(formData);
 
-      // Đăng ký xong thường sẽ chuyển về trang Login để người dùng đăng nhập lại
       alert("Sign Up Successfully! Please Login");
       navigate("/login");
     } catch (err) {
@@ -167,12 +165,9 @@ const RegisterPage = () => {
             ></input>
             {formData.password && (
               <div className="flex items-center gap-2 mt-1 mb-4">
-                {/* Ô vuông nhỏ duy nhất */}
                 <div
                   className={`w-3 h-3 rounded-sm transition-colors duration-300 ${strengthConfig.color}`}
                 ></div>
-
-                {/* Dòng chữ thông báo */}
                 <span
                   className={`text-xs font-medium ${strengthConfig.color.replace(
                     "bg-",

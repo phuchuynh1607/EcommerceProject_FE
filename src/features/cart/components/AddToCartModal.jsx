@@ -4,7 +4,6 @@ const AddToCartModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="bg-gray-800 text-white p-8 rounded-lg shadow-2xl flex flex-col items-center max-w-sm w-full animate-in fade-in zoom-in duration-300">
-        {/* Icon Tích xanh */}
         <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mb-4">
           <svg
             className="w-10 h-10 text-white"
@@ -25,7 +24,6 @@ const AddToCartModal = ({ isOpen, onClose }) => {
           Item has been added to your shopping cart
         </p>
 
-        {/* Nút đóng hoặc tự đóng sau 2s */}
         <button
           onClick={onClose}
           className="mt-6 text-sm text-gray-400 hover:text-white underline"

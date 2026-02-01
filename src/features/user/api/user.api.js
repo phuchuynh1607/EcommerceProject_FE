@@ -8,7 +8,13 @@ export const updateUserInfo = async (updateData) => {
   const response = await axios.put("/users/change_information", updateData);
   return response.data;
 };
+export const uploadAvatarApi = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
 
+  const response = await axios.post("/users/upload/", formData);
+  return response.data;
+};
 // Đổi mật khẩu
 export const changePasswordApi = async (passwordData) => {
   await axios.put("/users/password", passwordData);

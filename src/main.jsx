@@ -5,18 +5,20 @@ import router from "./app/router";
 import "./index.css";
 import { Providers } from "./app/providers";
 import { CartProvider } from "./app/cart_providers";
-
 import { ProductProvider } from "./app/product_providers";
 import { UserProvider } from "./app/user_providers";
+import { OrderProvider } from "./app/order_providers";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Providers>
       <UserProvider>
         <ProductProvider>
-          <CartProvider>
-            <RouterProvider router={router} />
-          </CartProvider>
+          <OrderProvider>
+            <CartProvider>
+              <RouterProvider router={router} />
+            </CartProvider>
+          </OrderProvider>
         </ProductProvider>
       </UserProvider>
     </Providers>

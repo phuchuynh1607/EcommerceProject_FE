@@ -22,8 +22,8 @@ const UserProfilePage = () => {
       </div>
     );
   if (!user) return null;
-  const handleUpdate = async (formData) => {
-    await updateProfile(formData); // Cập nhật lên Server
+  const handleUpdate = async (formData, file) => {
+    await updateProfile(formData, file); // Cập nhật lên Server
     await refreshUser(); // Cập nhật lại Context của toàn App
   };
 

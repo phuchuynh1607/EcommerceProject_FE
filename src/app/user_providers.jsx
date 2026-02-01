@@ -1,47 +1,58 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { UserContext } from "@/features/user/Context/UserContext";
-import { fetchUserInfo, updateUserInfo } from "@/features/user/api/user.api";
+import {
+  fetchUserInfo,
+  updateUserInfo,
+  uploadAvatarApi,
+} from "@/features/user/api/user.api";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export const UserProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth(); // Lấy thông tin từ AuthProvider (thẻ ra vào)
+  const { user } = useAuth();
 
-  // Bọc trong useCallback để hàm không bị tạo lại sau mỗi lần render
   const getProfile = useCallback(async () => {
-    // Nếu chưa đăng nhập (user null), xóa profile hiện tại và dừng lại
     if (!user) {
       setProfile(null);
       return;
     }
-
     setLoading(true);
     try {
       const data = await fetchUserInfo();
       setProfile(data);
     } catch (err) {
-      console.error("Lỗi khi fetch profile:", err);
+      console.error("Error ocurr while trying to fetch data!:", err);
     } finally {
       setLoading(false);
     }
-  }, [user]); // Chỉ tạo lại khi trạng thái login thay đổi
+  }, [user]);
 
-  const updateProfile = async (formData) => {
+  // Đảm bảo nhận đúng (profileData, selectedFile)
+  const handleUpdateProfile = async (profileData, selectedFile) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const updated = await updateUserInfo(formData);
-      setProfile(updated); // Cập nhật lại cache global ngay sau khi sửa thành công
-      return updated;
-    } catch (err) {
-      console.error("Lỗi khi cập nhật profile:", err);
-      throw err;
+      let finalImageUrl = profile?.user_image || "";
+      // Nếu selectedFile tồn tại và không phải undefined
+      if (selectedFile) {
+        const uploadResponse = await uploadAvatarApi(selectedFile);
+        if (uploadResponse && uploadResponse.url) {
+          finalImageUrl = uploadResponse.url; // Lấy URL từ server trả về
+        }
+      }
+      const payload = {
+        ...profileData,
+        user_image: finalImageUrl,
+      };
+      const updatedUser = await updateUserInfo(payload);
+      setProfile(updatedUser);
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  // Tự động load profile khi 'getProfile' thay đổi (do user thay đổi)
   useEffect(() => {
     getProfile();
   }, [getProfile]);
@@ -51,7 +62,7 @@ export const UserProvider = ({ children }) => {
       value={{
         profile,
         loading,
-        updateProfile,
+        updateProfile: handleUpdateProfile,
         refreshProfile: getProfile,
       }}
     >

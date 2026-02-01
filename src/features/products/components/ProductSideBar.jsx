@@ -1,5 +1,4 @@
 const ProductSidebar = ({ filters, setFilters }) => {
-  // Danh sách categories lấy chính xác từ dữ liệu của bạn
   const categories = [
     { id: 1, name: "Men Clothes", value: "men's clothing" },
     { id: 2, name: "Jewelry", value: "jewelery" },

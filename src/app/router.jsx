@@ -12,6 +12,8 @@ import ProductDetailPage from "@/features/products/pages/ProductDetailPage";
 import ShoppingCart from "@/features/cart/pages/ShoppingCart";
 //UserProfile
 import UserProfilePage from "@/features/user/pages/UserProfilePage";
+//OrderPage
+import OrderPage from "@/features/order/pages/OrderPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "user/profile",
         element: <UserProfilePage />,
+      },
+      {
+        path: "/profile/orders",
+        element: <OrderPage />,
       },
     ],
   },

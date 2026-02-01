@@ -35,7 +35,6 @@ function App() {
             ) : (
               <>
                 <div className="relative group">
-                  {/* Button giữ nguyên logic của bạn */}
                   <button className="inline-flex items-center text-white hover:text-orange-400 focus:outline-none transition-colors font-medium">
                     {user.username}
                     <svg
@@ -70,7 +69,7 @@ function App() {
                       My Account
                     </Link>
                     <Link
-                      to="/contact"
+                      to="/profile/orders"
                       className="block px-4 py-2 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
                     >
                       My Purchase

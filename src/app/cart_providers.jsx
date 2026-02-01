@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { getCart } from "@/features/cart/api/cart.api"; // Dùng đúng tên hàm của bạn
+import { getCart } from "@/features/cart/api/cart.api";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { CartContext } from "@/features/cart/Context/cartContext";
 import {

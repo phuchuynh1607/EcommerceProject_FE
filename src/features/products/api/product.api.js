@@ -4,7 +4,6 @@ import axios from "@/lib/axios";
 export const getProducts = async (filters = {}) => {
   const params = new URLSearchParams();
 
-  // Tích hợp Search và Category hiện có của bạn
   if (filters.search) params.append("search", filters.search);
   if (filters.category) params.append("category", filters.category);
 
@@ -35,13 +34,13 @@ export const rateProduct = async (id, star, token) => {
     // nên ta gửi trực tiếp biến 'star' làm data
     const response = await axios.put(`/products/product/${id}/rating`, star, {
       headers: {
-        Authorization: `Bearer ${token}`, // Truyền token để Backend check user_id
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
     return response.data;
   } catch (error) {
     console.error("Rating Failed!", error.response?.data || error.message);
-    throw error; // Ném lỗi để Component hiển thị (ví dụ: lỗi 403 chưa mua hàng)
+    throw error;
   }
 };

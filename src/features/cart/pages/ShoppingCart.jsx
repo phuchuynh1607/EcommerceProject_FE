@@ -3,11 +3,34 @@ import { useCart } from "../hooks/useCart"; // Đường dẫn hook của bạn
 import CartItem from "../components/CartItem";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, ArrowLeft } from "lucide-react";
+import { useOrder } from "@/features/order/hooks/useOrder";
 
 const ShoppingCart = () => {
-  const { cartItems, loading, updateCartQuantity, deleteCartItem } = useCart();
+  const {
+    cartItems,
+    loading,
+    updateCartQuantity,
+    deleteCartItem,
+    refreshCart,
+  } = useCart();
+  const { placeOrder, loading: orderLoading } = useOrder();
   const navigate = useNavigate();
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) return;
 
+    try {
+      await placeOrder();
+      await refreshCart();
+
+      alert("🎉 Đặt hàng thành công!");
+      navigate("/profile/orders");
+    } catch (error) {
+      // Xử lý lỗi (ví dụ: Hết hàng - Out of stock)
+      const errorMsg =
+        error.response?.data?.detail || "Đặt hàng thất bại. Vui lòng thử lại!";
+      alert(errorMsg);
+    }
+  };
   // Tính tổng cộng dựa trên dữ liệu thực tế từ Provider
   const totalAmount = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
@@ -98,8 +121,16 @@ const ShoppingCart = () => {
                     ${totalAmount.toLocaleString()}
                   </span>
                 </div>
-                <button className="w-full bg-indigo-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-95">
-                  Proceed to Checkout
+                <button
+                  onClick={handleCheckout}
+                  disabled={orderLoading || cartItems.length === 0}
+                  className={`w-full py-4 rounded-xl font-bold text-lg transition-all shadow-xl active:scale-95 ${
+                    orderLoading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-100"
+                  }`}
+                >
+                  {orderLoading ? "Processing Order..." : "Proceed to Checkout"}
                 </button>
                 <p className="text-center text-xs text-gray-400 mt-4">
                   Secure checkout powered by Ecm

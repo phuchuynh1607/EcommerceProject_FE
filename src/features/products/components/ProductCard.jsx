@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Star } from "lucide-react"; // Bạn có thể dùng lucide-react hoặc font-awesome
+import { Star } from "lucide-react";
 
 const ProductCard = ({ product }) => {
   return (
