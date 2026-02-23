@@ -33,7 +33,6 @@ export const UserProvider = ({ children }) => {
     setLoading(true);
     try {
       let finalImageUrl = profile?.user_image || "";
-      // Nếu selectedFile tồn tại và không phải undefined
       if (selectedFile) {
         const uploadResponse = await uploadAvatarApi(selectedFile);
         if (uploadResponse && uploadResponse.url) {

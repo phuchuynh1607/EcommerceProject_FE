@@ -27,7 +27,6 @@ const ProductGrid = ({ products }) => {
             </p>
           </div>
         ) : (
-          /* Lưới sản phẩm - Tự động thay đổi số cột theo màn hình */
           <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
             {products.map((item) => (
               <ProductCard key={item.id} product={item} />

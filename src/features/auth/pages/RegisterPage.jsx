@@ -1,19 +1,27 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth"; //
-
+import { useAuth } from "../hooks/useAuth";
+import InputField from "@/components/ui/InputField";
+import { registerSchema } from "@/lib/RegisterSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 const RegisterPage = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    first_name: "",
-    last_name: "",
-    phone_number: "",
-    role: "user",
-    password: "",
-    confirmPassword: "",
+  const { register: registerAuth } = useAuth();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      role: "user",
+      email: "",
+    },
   });
-
+  const passwordValue = watch("password", "");
   const getStrengthConfig = (password) => {
     if (!password) return { color: "bg-gray-300", text: "" };
     if (password.length < 6)
@@ -23,38 +31,23 @@ const RegisterPage = () => {
     return { color: "bg-green-500", text: "Strong Password" };
   };
 
-  const strengthConfig = getStrengthConfig(formData.password);
+  const strengthConfig = getStrengthConfig(passwordValue);
 
-  const [error, setError] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const { register } = useAuth();
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setError(null);
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match. Please check again.");
-      return;
-    }
-    setIsSubmitting(true);
     try {
-      await register(formData);
-
+      await registerAuth(data);
       alert("Sign Up Successfully! Please Login");
       navigate("/login");
     } catch (err) {
-      setError(
-        err.response?.data?.detail || "Failed to SignUp. Please try again!",
-      );
-    } finally {
-      setIsSubmitting(false);
+      const rawError = err.response?.data?.detail;
+      if (Array.isArray(rawError)) {
+        setError(rawError[0].msg);
+      } else if (typeof rawError === "string") {
+        setError(rawError);
+      } else {
+        setError("Something went wrong. Please try again later!");
+      }
     }
   };
 
@@ -63,7 +56,7 @@ const RegisterPage = () => {
       <div className="w-full max-w-md m-auto bg-indigo-100 rounded-2xl p-5 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <header>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-grey-100 mb-2">
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-grey-100 mb-2">
               Create an Account
             </h2>
             <img
@@ -76,7 +69,7 @@ const RegisterPage = () => {
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <form onSubmit={handleSubmit} autoComplete="off">
+        <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           <p className="text-center">
             <Link
               to="/login"
@@ -89,33 +82,28 @@ const RegisterPage = () => {
             <label className="block mb-1 text-indigo-500" htmlFor="email">
               Email
             </label>
-            <input
-              className="w-full p-1 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+            <InputField
               type="email"
-              name="email"
               autoComplete="email"
               placeholder="Enter your email here"
-              onChange={handleChange}
+              {...register("email")}
+              error={errors.email?.message}
               required
-            ></input>
+            ></InputField>
           </div>
           <div className="flex  mb-1 text-indigo-500 gap-3">
-            <input
-              className="w-full p-1 mb-1 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-              type="text"
-              name="first_name"
-              placeholder="First Name"
+            <InputField
               autoComplete="given-name"
-              onChange={handleChange}
+              placeholder="First Name"
+              {...register("first_name")}
+              error={errors.first_name?.message}
               required
             />
-            <input
-              className="w-full p-1 mb-1 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-              type="text"
-              name="last_name"
+            <InputField
+              {...register("last_name")}
               placeholder="Last Name"
+              error={errors.last_name?.message}
               autoComplete="family-name"
-              onChange={handleChange}
               required
             />
           </div>
@@ -127,43 +115,38 @@ const RegisterPage = () => {
             >
               Phone Number
             </label>
-            <input
-              className="w-full p-1 mb-2 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-              type="text"
-              name="phone_number"
+            <InputField
+              {...register("phone_number")}
+              error={errors.phone_number?.message}
               autoComplete="tel"
-              onChange={handleChange}
               required
-            ></input>
+            ></InputField>
           </div>
           <div>
             <label className="block mb-1 text-indigo-500" htmlFor="username">
               Username
             </label>
-            <input
-              className="w-full p-1 mb-2 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-              type="text"
-              name="username"
+            <InputField
+              {...register("username")}
               placeholder="Choose a username"
+              error={errors.username?.message}
               autoComplete="username"
-              onChange={handleChange}
               required
-            ></input>
+            ></InputField>
           </div>
           <div>
             <label className="block mb-1 text-indigo-500" htmlFor="password">
               Password
             </label>
-            <input
-              className="w-full p-1 mb-2 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+            <InputField
+              {...register("password")}
               type="password"
-              name="password"
-              placeholder="Create a strong password"
+              placeholder="Create a password"
+              error={errors.password?.message}
               autoComplete="new-password"
-              onChange={handleChange}
               required
-            ></input>
-            {formData.password && (
+            ></InputField>
+            {passwordValue && (
               <div className="flex items-center gap-2 mt-1 mb-4">
                 <div
                   className={`w-3 h-3 rounded-sm transition-colors duration-300 ${strengthConfig.color}`}
@@ -186,14 +169,13 @@ const RegisterPage = () => {
             >
               Confirm Password
             </label>
-            <input
-              className="w-full p-1 mb-2 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+            <InputField
+              {...register("confirmPassword")}
               type="password"
-              name="confirmPassword"
+              error={errors.confirmPassword?.message}
               autoComplete="new-password"
-              onChange={handleChange}
               required
-            ></input>
+            ></InputField>
             <p className="text-[12px] text-indigo-400 mt-1">
               ⚠️ You will use this username and password to log in later. ⚠️
             </p>

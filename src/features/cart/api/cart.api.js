@@ -12,7 +12,6 @@ export const getCart = async () => {
 };
 
 // Thêm sản phẩm vào giỏ hàng
-// cartRequest gồm { product_id: int, quantity: int }
 export const addToCartApi = async (cartRequest) => {
   try {
     const response = await axios.post("/carts/cart", cartRequest);

@@ -2,20 +2,15 @@ import React from "react";
 import { Trash2, Plus, Minus } from "lucide-react";
 
 const CartItem = ({ item, updateQuantity, removeItem }) => {
-  // Dữ liệu từ CartResponse: id (cart_id), quantity, product (image, title, price)
   const { id, quantity, product } = item;
-
-  // Logic cắt chữ: Nếu dài hơn 30 ký tự thì cắt và thêm dấu ...
   const displayTitle =
     product.title.length > 30
       ? `${product.title.substring(0, 30)}...`
       : product.title;
-
-  // Hàm xử lý thay đổi số lượng an toàn
   const handleUpdate = (e, newQty) => {
-    e.preventDefault(); // Chặn reload trang
+    e.preventDefault();
     if (newQty < 1) return;
-    updateQuantity(id, Number(newQty)); // Ép kiểu Number để tránh lỗi 422
+    updateQuantity(id, Number(newQty));
   };
 
   return (
@@ -24,7 +19,7 @@ const CartItem = ({ item, updateQuantity, removeItem }) => {
         {/* KHUNG ẢNH */}
         <div className="w-20 h-20 bg-white rounded-lg overflow-hidden shrink-0 border border-gray-50 p-1 flex items-center justify-center">
           <img
-            src={product.image} // Hãy đảm bảo tên trường này (image/image_url) khớp với Backend
+            src={product.image}
             alt={product.title}
             className="w-full h-full object-contain"
           />
@@ -47,7 +42,7 @@ const CartItem = ({ item, updateQuantity, removeItem }) => {
         {/* BỘ ĐIỀU KHIỂN SỐ LƯỢNG */}
         <div className="flex items-center bg-gray-50 border rounded-lg p-0.5">
           <button
-            type="button" // Ngăn reload trang
+            type="button"
             onClick={(e) => handleUpdate(e, quantity - 1)}
             disabled={quantity <= 1}
             className="p-1.5 hover:bg-white hover:shadow-sm rounded-md disabled:opacity-30 transition-all text-gray-600"
@@ -60,7 +55,7 @@ const CartItem = ({ item, updateQuantity, removeItem }) => {
           </span>
 
           <button
-            type="button" // Ngăn reload trang
+            type="button"
             onClick={(e) => handleUpdate(e, quantity + 1)}
             className="p-1.5 hover:bg-white hover:shadow-sm rounded-md transition-all text-gray-600"
           >
@@ -77,7 +72,7 @@ const CartItem = ({ item, updateQuantity, removeItem }) => {
 
         {/* NÚT XÓA */}
         <button
-          type="button" // Ngăn reload trang
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             removeItem(id);

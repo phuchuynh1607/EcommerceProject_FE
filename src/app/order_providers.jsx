@@ -15,11 +15,10 @@ export const OrderProvider = ({ children }) => {
     setLoading(true);
     try {
       const data = await fetchOrderHistory();
-      // Luôn đảm bảo orders là một mảng
       setOrders(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Fetch orders failed", error);
-      setOrders([]); // Nếu lỗi thì set về mảng rỗng thay vì để undefined
+      setOrders([]);
     } finally {
       setLoading(false);
     }
@@ -30,7 +29,6 @@ export const OrderProvider = ({ children }) => {
     setLoading(true);
     try {
       const newOrder = await checkoutAllApi();
-      // Sau khi đặt hàng thành công, cập nhật lại danh sách đơn hàng
       setOrders((prev) => [newOrder, ...prev]);
       return newOrder;
     } catch (error) {
@@ -46,7 +44,6 @@ export const OrderProvider = ({ children }) => {
     setLoading(true);
     try {
       await cancelOrderApi(orderId);
-      // Cập nhật trạng thái 'cancelled' trực tiếp ở UI để tối ưu trải nghiệm
       setOrders((prev) =>
         prev.map((order) =>
           order.id === orderId ? { ...order, status: "cancelled" } : order,

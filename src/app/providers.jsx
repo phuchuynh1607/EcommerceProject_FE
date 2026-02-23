@@ -38,7 +38,7 @@ export const Providers = ({ children }) => {
       tokenStorage.setTokens(data.access_token, data.refresh_token);
       const userProfile = await fetchUserProfile(data.access_token);
       setUser(userProfile);
-      return data; // Trả về để trang LoginPage tự chuyển hướng (navigate)
+      return data;
     }
   };
 
@@ -52,8 +52,8 @@ export const Providers = ({ children }) => {
   };
   const refreshUser = async () => {
     try {
-      const userProfile = await fetchUserProfile(); // Gọi API lấy thông tin mới nhất
-      setUser(userProfile); // Cập nhật lại state toàn cục
+      const userProfile = await fetchUserProfile();
+      setUser(userProfile);
     } catch (error) {
       console.error("Refresh user failed", error);
     }

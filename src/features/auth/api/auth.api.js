@@ -32,13 +32,12 @@ export const loginUser = async (credentials) => {
 };
 
 export const refreshAccessToken = async (refreshToken) => {
-  return axios.post("http://127.0.0.1:8000/auth/refresh", null, {
+  return axios.post("/auth/refresh", null, {
     params: { refresh_token: refreshToken },
   });
 };
 export const fetchUserProfile = async () => {
   try {
-    // AxiosClient sẽ tự gắn Bearer Token từ interceptor
     const response = await axiosClient.get("/users/");
     return response.data;
   } catch (error) {

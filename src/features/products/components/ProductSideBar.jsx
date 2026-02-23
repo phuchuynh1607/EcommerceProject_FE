@@ -7,7 +7,6 @@ const ProductSidebar = ({ filters, setFilters }) => {
   ];
 
   const handleCategoryClick = (categoryValue) => {
-    // Nếu click lại vào cái đang chọn thì bỏ chọn
     const newCategory = filters.category === categoryValue ? "" : categoryValue;
     setFilters({ ...filters, category: newCategory });
   };

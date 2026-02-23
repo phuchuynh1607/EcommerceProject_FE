@@ -4,7 +4,6 @@ import App from "@/App";
 // Auth Features
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
-
 // Products Features
 import ProductListPage from "@/features/products/pages/ProductListPage";
 import ProductDetailPage from "@/features/products/pages/ProductDetailPage";
@@ -20,7 +19,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true, // Đây là trang mặc định khi vào "/"
+        index: true,
         element: <ProductListPage />,
       },
       {

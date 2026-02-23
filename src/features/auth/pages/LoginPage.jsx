@@ -1,55 +1,53 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import InputField from "@/components/ui/InputField"; // Dùng lại component cũ
+import { loginSchema } from "@/lib/LoginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState(() => {
-    const savedUser = localStorage.getItem("rememberedUser");
-    const savedPassword = localStorage.getItem("rememberedUserPassword");
-    return {
-      username: savedUser || "",
-      password: savedPassword || "",
-    };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: localStorage.getItem("rememberedUser") || "",
+      password: localStorage.getItem("rememberedUserPassword") || "",
+      rememberMe: !!localStorage.getItem("rememberedUser"),
+    },
   });
   const [error, setError] = useState(null);
-
   const { login } = useAuth();
-  const [rememberMe, setRememberMe] = useState(() => {
-    return !!localStorage.getItem("rememberedUser");
-  });
   const navigate = useNavigate();
-
-  // Hàm xử lý khi người dùng tích/bỏ tích
-  const handleRememberChange = (e) => {
-    setRememberMe(e.target.checked);
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setError(null);
     try {
-      await login(formData.username, formData.password);
-      alert(`Login successful! Welcome ${formData.username}`);
-      if (rememberMe) {
-        // Lưu tên đăng nhập để lần sau tự điền
-        localStorage.setItem("rememberedUser", formData.username);
-        localStorage.setItem("rememberedUserPassword", formData.password);
+      await login(data.username, data.password);
+
+      // Xử lý Remember Me
+      if (data.rememberMe) {
+        localStorage.setItem("rememberedUser", data.username);
+        localStorage.setItem("rememberedUserPassword", data.password);
       } else {
-        // Nếu không tích thì xóa đi cho bảo mật
         localStorage.removeItem("rememberedUser");
         localStorage.removeItem("rememberedUserPassword");
       }
 
+      alert(`Login successful! Welcome ${data.username}`);
       navigate("/");
     } catch (err) {
+      // Xử lý lỗi Object từ Backend như đã làm ở Register
+      const backendDetail = err.response?.data?.detail;
       setError(
-        "Authentication failed. Please verify your account information.",
+        Array.isArray(backendDetail)
+          ? backendDetail[0].msg
+          : typeof backendDetail === "string"
+            ? backendDetail
+            : "Authentication failed",
       );
-      console.error(err);
     }
   };
 
@@ -70,43 +68,39 @@ const LoginPage = () => {
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <form onSubmit={handleSubmit} autoComplete="off">
+        <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           <div>
             <label className="block mb-2 text-indigo-500" htmlFor="username">
               Username
             </label>
-            <input
-              className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-600 outline-none focus:bg-gray-300"
-              type="text"
-              name="username"
-              value={formData.username}
+            <InputField
+              {...register("username")}
+              placeholder="Enter your username"
+              error={errors.username?.message}
               autoComplete="one-time-code"
-              onChange={handleChange}
               required
-            ></input>
+            ></InputField>
           </div>
           <div>
             <label className="block mb-2 text-indigo-500" htmlFor="password">
               Password
             </label>
-            <input
-              className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-600 outline-none focus:bg-gray-300"
+            <InputField
               type="password"
-              name="password"
-              value={formData.password}
+              {...register("password")}
+              placeholder="Enter your password"
+              error={errors.password?.message}
               autoComplete="new-password"
-              onChange={handleChange}
               required
-            ></input>
+            ></InputField>
           </div>
 
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
               <input
-                id="remember"
+                id="rememberMe"
                 type="checkbox"
-                checked={rememberMe}
-                onChange={handleRememberChange}
+                {...register("rememberMe")}
                 className="h-4 w-4 text-indigo-500 accent-indigo-700 focus:ring-indigo-500 border-gray-300 rounded"
               />
               <label
@@ -126,6 +120,7 @@ const LoginPage = () => {
           <div className="flex justify-center w-full mt-6">
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-2/3 bg-indigo-700 hover:text-indigo-500 text-white font-extrabold py-3 px-6 rounded-xl shadow-lg transform transition hover:scale-105 active:scale-95 duration-200 disabled:opacity-50"
             >
               Login

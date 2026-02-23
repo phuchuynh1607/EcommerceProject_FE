@@ -6,7 +6,7 @@ const ProfileForm = ({ profile, onSubmit }) => {
     last_name: profile?.last_name || "",
     phone_number: profile?.phone_number || "",
     gender: profile?.gender || "Other",
-    user_image: profile?.user_image || "", // Lưu URL ảnh hiện tại
+    user_image: profile?.user_image || "",
   });
 
   // State cho việc xử lý File
@@ -52,7 +52,7 @@ const ProfileForm = ({ profile, onSubmit }) => {
     setIsSubmitting(true);
     try {
       await onSubmit(formData, selectedFile);
-      alert("✅ Lưu thông tin thành công!");
+      alert("Successfully Save Information!");
     } catch (error) {
       console.error(error);
     } finally {

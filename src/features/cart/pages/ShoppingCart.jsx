@@ -48,7 +48,6 @@ const ShoppingCart = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen pb-20 border-indigo-500">
-      {/* Header đơn giản cho trang Cart */}
       <div className="rounded-t-md border-b sticky top-0 z-10 bg-indigo-700">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between ">
           <button
@@ -62,7 +61,7 @@ const ShoppingCart = () => {
             <ShoppingBag size={24} className="text-gray-100" />
             My Shopping Cart ({cartItems.length})
           </h1>
-          <div className="w-24"></div> {/* Spacer để cân bằng layout */}
+          <div className="w-24"></div>
         </div>
       </div>
 

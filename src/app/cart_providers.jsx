@@ -13,17 +13,16 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Hàm này sẽ được gọi mỗi khi cần làm mới số lượng Badge
   const refreshCart = useCallback(async () => {
     if (user) {
-      setLoading(true); // Bắt đầu load
+      setLoading(true);
       try {
         const data = await getCart();
         setCartItems(data);
       } catch (error) {
         console.error("Failed to fetch cart", error);
       } finally {
-        setLoading(false); // Kết thúc load
+        setLoading(false);
       }
     }
   }, [user]);
@@ -35,8 +34,6 @@ export const CartProvider = ({ children }) => {
       if (user) {
         await refreshCart();
       } else if (isMounted) {
-        // Thay vì setCartItems([]), chúng ta bọc nó lại
-        // để đảm bảo nó không chạy đồng bộ ngay lập tức
         setCartItems([]);
       }
     };
@@ -49,21 +46,17 @@ export const CartProvider = ({ children }) => {
   }, [user, refreshCart]);
   const addToCart = async (productId, quantity) => {
     if (!user) return;
-    setLoading(true); // 1. Báo cho cả App biết là đang xử lý
+    setLoading(true);
     try {
-      // 2. Gọi API "vận chuyển" dữ liệu
       await addToCartApi({ product_id: productId, quantity });
-
-      // 3. Sau khi server ok, bảo Provider đi lấy dữ liệu mới về (để Badge cập nhật)
       await refreshCart();
 
-      // 4. Mở Modal thông báo cho người dùng
       setIsModalOpen(true);
     } catch (error) {
       alert("Error while trying to add item to cart!");
       console.log(error);
     } finally {
-      setLoading(false); // 5. Kết thúc xử lý
+      setLoading(false);
     }
   };
   const updateCartQuantity = async (cartId, newQuantity) => {
@@ -84,11 +77,9 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // 4. MỚI: Hàm xóa sản phẩm khỏi giỏ
   const deleteCartItem = async (cartId) => {
     try {
       await deleteCartApi(cartId);
-      // Xóa ngay lập tức khỏi state để UI biến mất luôn
       setCartItems((prev) => prev.filter((item) => item.id !== cartId));
     } catch (error) {
       alert("Delete failed!");
@@ -101,7 +92,7 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cartItems,
-        uniqueItemCount: cartItems.length, // Tính số lượng hiển thị Badge
+        uniqueItemCount: cartItems.length,
         refreshCart,
         loading,
         setLoading,

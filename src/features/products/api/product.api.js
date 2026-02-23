@@ -25,13 +25,8 @@ export const getProductById = async (id) => {
   }
 };
 
-/** * Gửi đánh giá sao cho sản phẩm
- * Yêu cầu: Đăng nhập + Đã mua hàng (completed)
- */
 export const rateProduct = async (id, star, token) => {
   try {
-    // Lưu ý: Backend dùng Body(..., ge=1, le=5) cho int,
-    // nên ta gửi trực tiếp biến 'star' làm data
     const response = await axios.put(`/products/product/${id}/rating`, star, {
       headers: {
         Authorization: `Bearer ${token}`,
