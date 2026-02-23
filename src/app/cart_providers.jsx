@@ -60,7 +60,7 @@ export const CartProvider = ({ children }) => {
       // 4. Mở Modal thông báo cho người dùng
       setIsModalOpen(true);
     } catch (error) {
-      alert("Lỗi thêm vào giỏ hàng!");
+      alert("Error while trying to add item to cart!");
       console.log(error);
     } finally {
       setLoading(false); // 5. Kết thúc xử lý
@@ -80,7 +80,7 @@ export const CartProvider = ({ children }) => {
     } catch (error) {
       console.error("Update failed:", error);
       setCartItems(previousItems);
-      alert("Không thể cập nhật số lượng. Vui lòng thử lại!");
+      alert("Can't update your cart. Please try again!");
     }
   };
 

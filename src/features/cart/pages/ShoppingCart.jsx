@@ -22,12 +22,12 @@ const ShoppingCart = () => {
       await placeOrder();
       await refreshCart();
 
-      alert("🎉 Đặt hàng thành công!");
+      alert("Place Order Successfully!");
       navigate("/profile/orders");
     } catch (error) {
       // Xử lý lỗi (ví dụ: Hết hàng - Out of stock)
       const errorMsg =
-        error.response?.data?.detail || "Đặt hàng thất bại. Vui lòng thử lại!";
+        error.response?.data?.detail || "Can't place order. Please try again!";
       alert(errorMsg);
     }
   };

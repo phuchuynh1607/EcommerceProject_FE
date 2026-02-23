@@ -26,7 +26,7 @@ export const ProductProvider = ({ children }) => {
         return newMap;
       });
     } catch (err) {
-      setError(err.message || "Không thể tải danh sách sản phẩm");
+      setError(err.message || "Failed to fetch products");
     } finally {
       setLoading(false);
     }
@@ -46,7 +46,7 @@ export const ProductProvider = ({ children }) => {
       return data;
     } catch (err) {
       const msg =
-        err.response?.data?.detail || "Không thể lấy chi tiết sản phẩm";
+        err.response?.data?.detail || "Can't get this product's detail!";
       setError(msg);
       throw err;
     } finally {

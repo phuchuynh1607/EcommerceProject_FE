@@ -34,7 +34,7 @@ export const OrderProvider = ({ children }) => {
       setOrders((prev) => [newOrder, ...prev]);
       return newOrder;
     } catch (error) {
-      console.error("Lỗi khi đặt hàng:", error);
+      console.error("Can't place order", error);
       throw error;
     } finally {
       setLoading(false);
@@ -53,7 +53,7 @@ export const OrderProvider = ({ children }) => {
         ),
       );
     } catch (error) {
-      console.error("Lỗi khi hủy đơn hàng:", error);
+      console.error("Can't cancel order:", error);
       throw error;
     } finally {
       setLoading(false);

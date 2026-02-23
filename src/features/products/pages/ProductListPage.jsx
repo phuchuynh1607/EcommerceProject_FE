@@ -25,7 +25,7 @@ const ProductListPage = () => {
             onClick={() => window.location.reload()}
             className="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition"
           >
-            Thử lại
+            Try again
           </button>
         </div>
       </div>
