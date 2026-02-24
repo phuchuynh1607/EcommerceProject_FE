@@ -4,6 +4,7 @@ import { useProductDetail } from "../hooks/useProductDetail";
 import { Star, ShoppingCart } from "lucide-react";
 import AddToCartModal from "../../cart/components/AddToCartModal";
 import { useCart } from "../../cart/hooks/useCart";
+import CustomButton from "@/components/ui/CustomButton";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -93,7 +94,6 @@ const ProductDetailPage = () => {
             <div className="flex items-center gap-1 mb-6">
               <div className="flex items-center gap-1  pr-2">
                 <div className="flex text-orange-400">
-                  {/* Hiển thị 5 sao, tô màu dựa trên rating */}
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
@@ -126,7 +126,8 @@ const ProductDetailPage = () => {
                 Description
               </h3>
               <p className="text-gray-700 leading-relaxed text-lg whitespace-pre-line bg-gray-50 p-4 rounded-lg">
-                {product.description || "Không có mô tả cho sản phẩm này."}
+                {product.description ||
+                  "There's no description for this product!"}
               </p>
             </div>
             <div className="mb-6 flex justify-between items-center">
@@ -138,13 +139,14 @@ const ProductDetailPage = () => {
                   Quantity:
                 </label>
                 <div class="flex items-center space-x-2">
-                  <button
+                  <CustomButton
                     type="button"
+                    variant="decrement_and_increment"
                     onClick={handleDecrement}
-                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300"
+                    disabled={quantity <= 1}
                   >
                     -
-                  </button>
+                  </CustomButton>
 
                   <input
                     type="number"
@@ -156,13 +158,13 @@ const ProductDetailPage = () => {
                     class="no-spinner w-16 text-center rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
                   />
 
-                  <button
+                  <CustomButton
                     type="button"
                     onClick={handleIncrement}
-                    class="px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300"
+                    variant="decrement_and_increment"
                   >
                     +
-                  </button>
+                  </CustomButton>
                 </div>
               </div>
 
@@ -175,11 +177,10 @@ const ProductDetailPage = () => {
               </div>
             </div>
 
-            {/* Nút thao tác */}
             <div className="mt-auto flex flex-wrap gap-4">
               <button
                 onClick={handleAddToCart}
-                disabled={cartLoading} // Vô hiệu hóa khi đang xử lý request
+                disabled={cartLoading}
                 className={`flex-1 min-w-[200px] flex items-center justify-center gap-2 py-3 rounded-sm font-medium transition
                   ${
                     cartLoading

@@ -1,5 +1,6 @@
 import React from "react";
 import { Trash2, Plus, Minus } from "lucide-react";
+import CustomButton from "@/components/ui/CustomButton";
 
 const CartItem = ({ item, updateQuantity, removeItem }) => {
   const { id, quantity, product } = item;
@@ -41,26 +42,24 @@ const CartItem = ({ item, updateQuantity, removeItem }) => {
       <div className="flex items-center gap-6">
         {/* BỘ ĐIỀU KHIỂN SỐ LƯỢNG */}
         <div className="flex items-center bg-gray-50 border rounded-lg p-0.5">
-          <button
-            type="button"
+          <CustomButton
+            variant="add_minus"
             onClick={(e) => handleUpdate(e, quantity - 1)}
             disabled={quantity <= 1}
-            className="p-1.5 hover:bg-white hover:shadow-sm rounded-md disabled:opacity-30 transition-all text-gray-600"
           >
             <Minus size={14} />
-          </button>
+          </CustomButton>
 
           <span className="px-3 font-bold text-gray-700 min-w-[32px] text-center text-sm">
             {quantity}
           </span>
 
-          <button
-            type="button"
+          <CustomButton
+            variant="add_minus"
             onClick={(e) => handleUpdate(e, quantity + 1)}
-            className="p-1.5 hover:bg-white hover:shadow-sm rounded-md transition-all text-gray-600"
           >
             <Plus size={14} />
-          </button>
+          </CustomButton>
         </div>
 
         {/* THÀNH TIỀN */}

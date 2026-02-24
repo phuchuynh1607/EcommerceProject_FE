@@ -5,7 +5,6 @@ import OrderCard from "./OrderCard";
 const OrderGrid = () => {
   const { orders, loading, refreshOrders } = useOrder();
 
-  // Automatically fetch order history when component mounts
   useEffect(() => {
     refreshOrders();
   }, [refreshOrders]);
@@ -39,7 +38,6 @@ const OrderGrid = () => {
         Checkout History
       </h2>
       <div className="space-y-2">
-        {/* Array.isArray check to protect the app from crashing */}
         {Array.isArray(orders) ? (
           orders.map((order) => <OrderCard key={order.id} order={order} />)
         ) : (

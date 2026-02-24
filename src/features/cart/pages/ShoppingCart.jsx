@@ -4,7 +4,7 @@ import CartItem from "../components/CartItem";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, ArrowLeft } from "lucide-react";
 import { useOrder } from "@/features/order/hooks/useOrder";
-
+import CustomButton from "@/components/ui/CustomButton";
 const ShoppingCart = () => {
   const {
     cartItems,
@@ -25,7 +25,6 @@ const ShoppingCart = () => {
       alert("Place Order Successfully!");
       navigate("/profile/orders");
     } catch (error) {
-      // Xử lý lỗi (ví dụ: Hết hàng - Out of stock)
       const errorMsg =
         error.response?.data?.detail || "Can't place order. Please try again!";
       alert(errorMsg);
@@ -77,16 +76,15 @@ const ShoppingCart = () => {
             <p className="text-gray-500 mb-8">
               Looks like you haven't added anything to your cart yet.
             </p>
-            <button
+            <CustomButton
               onClick={() => navigate("/")}
-              className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100"
+              variant="start_shopping"
             >
               Start Shopping
-            </button>
+            </CustomButton>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Danh sách sản phẩm */}
             <div className="lg:col-span-2">
               {cartItems.map((item) => (
                 <CartItem
@@ -120,17 +118,14 @@ const ShoppingCart = () => {
                     ${totalAmount.toLocaleString()}
                   </span>
                 </div>
-                <button
+                <CustomButton
+                  variant="checkout"
                   onClick={handleCheckout}
-                  disabled={orderLoading || cartItems.length === 0}
-                  className={`w-full py-4 rounded-xl font-bold text-lg transition-all shadow-xl active:scale-95 ${
-                    orderLoading
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-100"
-                  }`}
+                  disabled={cartItems.length === 0}
+                  isLoading={orderLoading}
                 >
-                  {orderLoading ? "Processing Order..." : "Proceed to Checkout"}
-                </button>
+                  Proceed to Checkout
+                </CustomButton>
                 <p className="text-center text-xs text-gray-400 mt-4">
                   Secure checkout powered by Ecm
                 </p>

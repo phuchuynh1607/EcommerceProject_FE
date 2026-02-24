@@ -14,8 +14,6 @@ const ProductListPage = () => {
       </div>
     );
   }
-
-  // Hiển thị nếu có lỗi (ví dụ: mất kết nối server hoặc lỗi CORS)
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -45,7 +43,6 @@ const ProductListPage = () => {
           <span className="text-sm font-medium">
             Filter by : {filters.search}
           </span>
-          {/* Các nút bấm Sort giống Shopee */}
         </div>
 
         {loading ? (

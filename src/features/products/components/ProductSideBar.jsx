@@ -1,3 +1,4 @@
+import CustomButton from "@/components/ui/CustomButton";
 const ProductSidebar = ({ filters, setFilters }) => {
   const categories = [
     { id: 1, name: "Men Clothes", value: "men's clothing" },
@@ -49,12 +50,12 @@ const ProductSidebar = ({ filters, setFilters }) => {
       {/* Reset */}
       {(filters.category || filters.search) && (
         <div className="px-4 pb-4">
-          <button
+          <CustomButton
             onClick={() => setFilters({ ...filters, category: "", search: "" })}
-            className="w-full py-1.5 bg-indigo-600 text-md font-medium border border-indigo-700 text-gray-100 hover:bg-indigo-700 rounded-md"
+            variant="reset"
           >
             Reset
-          </button>
+          </CustomButton>
         </div>
       )}
     </div>

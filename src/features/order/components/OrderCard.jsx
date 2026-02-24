@@ -25,7 +25,6 @@ const OrderCard = ({ order }) => {
 
   return (
     <div className="bg-white border border-indigo-500 rounded-lg shadow-sm overflow-hidden mb-6">
-      {/* Card Header: ID and Status */}
       <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-indigo-600">
         <div>
           <p className="text-md text-gray-100 uppercase font-bold">Order ID</p>
@@ -39,14 +38,12 @@ const OrderCard = ({ order }) => {
       </div>
 
       <div className="px-6 py-4 space-y-6">
-        {/* Check if order.items exists before mapping */}
         {order?.items?.map((item) => (
           <div
             key={item.product_id}
             className="flex justify-between items-center border-b border-gray-50 pb-4 last:border-0 last:pb-0"
           >
             <div className="flex items-center space-x-4">
-              {/* Product Image Container */}
               <div className="w-20 h-20 bg-gray-50 rounded-lg flex-shrink-0 overflow-hidden border border-gray-100">
                 {item.product?.image ? (
                   <img
@@ -84,7 +81,6 @@ const OrderCard = ({ order }) => {
         ))}
       </div>
 
-      {/* Footer: Total and Actions */}
       <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-between items-center">
         <div>
           <p className="text-xs text-gray-500">
@@ -99,8 +95,6 @@ const OrderCard = ({ order }) => {
             </span>
           </div>
         </div>
-
-        {/* Cancel Button: Only visible if status is pending */}
         {order.status === "pending" && (
           <button
             onClick={handleCancel}

@@ -7,9 +7,8 @@ function App() {
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
-      // Chào tạm biệt trước khi xóa dữ liệu user
       alert(`Goodbye ${user?.username || "User"}, see you again!`);
-      logout(); // Sau đó mới gọi hàm logout để xóa token/state
+      logout();
     }
   };
   return (
@@ -55,11 +54,11 @@ function App() {
                   {/* DROP DOWN MENU - THAY ĐỔI Ở ĐÂY */}
                   <div
                     className="absolute left-0 mt-2 py-2 w-40 bg-white shadow-xl rounded-md border border-gray-100 
-                  /* Trạng thái mặc định: Ẩn và đẩy xuống một chút */
+               
                   opacity-0 invisible translate-y-2 
-                  /* Trạng thái khi Hover: Hiện và trượt lên lại */
+         
                   group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 
-                  /* Thời gian và kiểu chuyển động */
+      
                   transition-all duration-300 ease-out z-50"
                   >
                     <Link
@@ -93,7 +92,6 @@ function App() {
 
       {/* App.jsx */}
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Thêm một thẻ div bọc ngoài Outlet để xử lý bo góc */}
         <div className="bg-white rounded-lg overflow-hidden shadow-sm">
           <Outlet />
         </div>

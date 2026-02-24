@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 const UserProfilePage = () => {
   const { profile, updateProfile } = useUserProfile();
-  const { refreshUser, user, isLoading } = useAuth(); // Lấy hàm refresh từ Provider
+  const { refreshUser, user, isLoading } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
-    // Nếu đã tải xong mà không có user, đuổi về trang chủ ngay
     if (!isLoading && !user) {
       navigate("/");
     }
@@ -23,8 +22,8 @@ const UserProfilePage = () => {
     );
   if (!user) return null;
   const handleUpdate = async (formData, file) => {
-    await updateProfile(formData, file); // Cập nhật lên Server
-    await refreshUser(); // Cập nhật lại Context của toàn App
+    await updateProfile(formData, file);
+    await refreshUser();
   };
 
   return (

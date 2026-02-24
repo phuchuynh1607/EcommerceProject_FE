@@ -5,6 +5,7 @@ import InputField from "@/components/ui/InputField"; // Dùng lại component c�
 import { loginSchema } from "@/lib/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import CustomButton from "@/components/ui/CustomButton";
 
 const LoginPage = () => {
   const {
@@ -118,13 +119,14 @@ const LoginPage = () => {
             </a>
           </div>
           <div className="flex justify-center w-full mt-6">
-            <button
+            <CustomButton
               type="submit"
-              disabled={isSubmitting}
-              className="w-2/3 bg-indigo-700 hover:text-indigo-500 text-white font-extrabold py-3 px-6 rounded-xl shadow-lg transform transition hover:scale-105 active:scale-95 duration-200 disabled:opacity-50"
+              isLoading={isSubmitting}
+              className="w-2/3"
+              variant="login_register"
             >
               Login
-            </button>
+            </CustomButton>
           </div>
         </form>
         <div className="mt-6 mb-4">
