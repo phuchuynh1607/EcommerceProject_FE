@@ -36,8 +36,6 @@ export const ProductProvider = ({ children }) => {
     setLoading(true);
     try {
       const data = await getProductById(id);
-
-      // Cập nhật sản phẩm đơn lẻ vào Map
       setProductMap((prev) => ({
         ...prev,
         [id]: data,
