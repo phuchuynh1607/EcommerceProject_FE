@@ -1,7 +1,7 @@
 import React from "react";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "./ProductCard";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 const ProductGrid = ({ products }) => {
   const navigate = useNavigate();

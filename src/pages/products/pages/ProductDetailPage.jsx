@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useProductDetail } from "../hooks/useProductDetail";
+import { useProductDetail } from "@/hooks/useProductDetail";
 import { Star, ShoppingCart } from "lucide-react";
 import AddToCartModal from "../../cart/components/AddToCartModal";
-import { useCart } from "../../cart/hooks/useCart";
+import { useCart } from "@/hooks/useCart";
 import CustomButton from "@/components/ui/CustomButton";
 
 const ProductDetailPage = () => {

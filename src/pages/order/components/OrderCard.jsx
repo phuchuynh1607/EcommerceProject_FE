@@ -1,5 +1,5 @@
 import React from "react";
-import { useOrder } from "../../../hooks/useOrder";
+import { useOrder } from "@/hooks/useOrder";
 
 const OrderCard = ({ order }) => {
   const { cancelOrder, loading } = useOrder();

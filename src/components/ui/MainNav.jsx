@@ -1,8 +1,8 @@
 import SearchBar from "./searchBar";
 import { Link } from "react-router-dom";
-import { useCart } from "@/features/cart/hooks/useCart";
+import { useCart } from "@/hooks/useCart";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 const MainNav = ({ isCartPage = false }) => {
   const { uniqueItemCount } = useCart();
   const { user } = useAuth();

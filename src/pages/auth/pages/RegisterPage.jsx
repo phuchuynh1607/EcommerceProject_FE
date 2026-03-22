@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import InputField from "@/components/ui/InputField";
 import { registerSchema } from "@/lib/RegisterSchema";
 import { zodResolver } from "@hookform/resolvers/zod";

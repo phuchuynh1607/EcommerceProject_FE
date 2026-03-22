@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import { useAuth } from "./features/auth/hooks/useAuth";
+import { useAuth } from "./hooks/useAuth";
 import MainNav from "./components/ui/MainNav";
 
 function App() {

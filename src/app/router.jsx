@@ -2,17 +2,17 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "@/App";
 
 // Auth Features
-import LoginPage from "@/features/auth/pages/LoginPage";
-import RegisterPage from "@/features/auth/pages/RegisterPage";
+import LoginPage from "@/pages/auth/pages/LoginPage";
+import RegisterPage from "@/pages/auth/pages/RegisterPage";
 // Products Features
-import ProductListPage from "@/features/products/pages/ProductListPage";
-import ProductDetailPage from "@/features/products/pages/ProductDetailPage";
+import ProductListPage from "@/pages/products/pages/ProductListPage";
+import ProductDetailPage from "@/pages/products/pages/ProductDetailPage";
 //Cart Features
-import ShoppingCart from "@/features/cart/pages/ShoppingCart";
+import ShoppingCart from "@/pages/cart/pages/ShoppingCart";
 //UserProfile
-import UserProfilePage from "@/features/user/pages/UserProfilePage";
+import UserProfilePage from "@/pages/user/pages/UserProfilePage";
 //OrderPage
-import OrderPage from "@/features/order/pages/OrderPage";
+import OrderPage from "@/pages/order/pages/OrderPage";
 const router = createBrowserRouter([
   {
     path: "/",

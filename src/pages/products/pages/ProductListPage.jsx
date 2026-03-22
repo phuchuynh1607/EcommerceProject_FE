@@ -1,7 +1,7 @@
 import { ProductContext } from "../../../context/ProductContext";
 import ProductSidebar from "../components/ProductSideBar";
 import ProductGrid from "../components/ProductGrid";
-import { useProducts } from "../hooks/useProducts";
+import { useProducts } from "@/hooks/useProducts";
 
 const ProductListPage = () => {
   const { products, loading, error, filters, setFilters } = useProducts();

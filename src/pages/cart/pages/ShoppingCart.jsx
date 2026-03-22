@@ -1,5 +1,5 @@
 import React from "react";
-import { useCart } from "../hooks/useCart"; // Đường dẫn hook của bạn
+import { useCart } from "@/hooks/useCart";
 import CartItem from "../components/CartItem";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, ArrowLeft } from "lucide-react";

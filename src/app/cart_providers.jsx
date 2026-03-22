@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { getCart } from "@/services/cart/cart.service";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { CartContext } from "@/context/cartContext";
 import {
   addToCartApi,

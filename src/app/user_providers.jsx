@@ -5,7 +5,7 @@ import {
   updateUserInfo,
   uploadAvatarApi,
 } from "@/services/user/user.service";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 
 export const UserProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);

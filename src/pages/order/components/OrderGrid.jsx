@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useOrder } from "../../../hooks/useOrder";
+import { useOrder } from "@/hooks/useOrder";
 import OrderCard from "./OrderCard";
 
 const OrderGrid = () => {
