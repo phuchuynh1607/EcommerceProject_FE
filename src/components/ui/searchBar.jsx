@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { ProductContext } from "@/features/products/Context/ProductContext";
+import { ProductContext } from "@/context/ProductContext";
 import CustomButton from "./CustomButton";
 
 const SearchBar = () => {

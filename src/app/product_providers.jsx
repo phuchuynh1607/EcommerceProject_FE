@@ -1,9 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
-import {
-  getProducts,
-  getProductById,
-} from "@/features/products/api/product.api";
-import { ProductContext } from "@/features/products/Context/ProductContext";
+import { getProducts, getProductById } from "@/services/order/product.service";
+import { ProductContext } from "@/context/ProductContext";
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [productMap, setProductMap] = useState({});

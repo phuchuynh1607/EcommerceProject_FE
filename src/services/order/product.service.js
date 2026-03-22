@@ -1,4 +1,4 @@
-import axios from "@/lib/axios";
+import axios from "@/services/apiClient";
 
 // Lấy danh sách tất cả sản phẩm
 export const getProducts = async (filters = {}) => {

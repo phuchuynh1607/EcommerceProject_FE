@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileForm from "../components/ProfileForm";
-import { useUserProfile } from "../hooks/useUserProfile";
+import { useUserProfile } from "../../../hooks/useUserProfile";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";

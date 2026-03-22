@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { UserContext } from "@/features/user/Context/UserContext";
+import { UserContext } from "@/context/UserContext";
 import {
   fetchUserInfo,
   updateUserInfo,
   uploadAvatarApi,
-} from "@/features/user/api/user.api";
+} from "@/services/user/user.service";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export const UserProvider = ({ children }) => {

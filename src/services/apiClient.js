@@ -1,7 +1,6 @@
-// src/lib/axios.js
 import axios from "axios";
-import { tokenStorage } from "./authToken";
-import { refreshAccessToken } from "@/features/auth/api/auth.api";
+import { tokenStorage } from "../lib/authToken";
+import { refreshAccessToken } from "@/services/auth/auth.service";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -45,8 +44,8 @@ instance.interceptors.response.use(
     }
 
     const refreshToken = tokenStorage.getRefreshToken();
-
     const accessToken = tokenStorage.getAccessToken();
+
     if (!refreshToken || (accessToken && !isAccessTokenExpired(accessToken))) {
       tokenStorage.clearTokens();
       return Promise.reject(error);

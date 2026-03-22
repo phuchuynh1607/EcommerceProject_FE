@@ -1,4 +1,4 @@
-import axios from "@/lib/axios";
+import axios from "@/services/apiClient";
 
 // Lấy toàn bộ giỏ hàng của người dùng hiện tại
 export const getCart = async () => {

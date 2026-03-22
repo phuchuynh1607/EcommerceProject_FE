@@ -1,5 +1,5 @@
-import axiosClient from "@/lib/axios";
-import axios from "axios";
+import axiosClient from "@/services/apiClient";
+import axios from "@/services/apiClient";
 
 export const registerUser = async (userData) => {
   try {

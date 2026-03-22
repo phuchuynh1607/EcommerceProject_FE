@@ -1,4 +1,4 @@
-import axios from "@/lib/axios";
+import axios from "@/services/apiClient";
 /**
  * Lấy lịch sử đơn hàng của người dùng hiện tại
  * @returns {Promise<Array>}

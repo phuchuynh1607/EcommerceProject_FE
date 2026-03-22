@@ -1,4 +1,4 @@
-import { ProductContext } from "../Context/ProductContext";
+import { ProductContext } from "../../../context/ProductContext";
 import ProductSidebar from "../components/ProductSideBar";
 import ProductGrid from "../components/ProductGrid";
 import { useProducts } from "../hooks/useProducts";

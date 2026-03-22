@@ -3,7 +3,7 @@ import { useCart } from "../hooks/useCart"; // Đường dẫn hook của bạn
 import CartItem from "../components/CartItem";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, ArrowLeft } from "lucide-react";
-import { useOrder } from "@/features/order/hooks/useOrder";
+import { useOrder } from "@/hooks/useOrder";
 import CustomButton from "@/components/ui/CustomButton";
 const ShoppingCart = () => {
   const {

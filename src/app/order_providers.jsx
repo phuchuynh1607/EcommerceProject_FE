@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { OrderContext } from "@/features/order/Context/orderContext";
+import { OrderContext } from "@/context/orderContext";
 import {
   fetchOrderHistory,
   checkoutAllApi,
   cancelOrderApi,
-} from "@/features/order/api/order.api";
+} from "@/services/order/order.service";
 
 export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);

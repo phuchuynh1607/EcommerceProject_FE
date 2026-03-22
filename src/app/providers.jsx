@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { AuthContext } from "@/features/auth/Context/AuthContext";
+import { AuthContext } from "@/context/AuthContext";
 import {
   loginUser,
   fetchUserProfile,
   registerUser,
-} from "@/features/auth/api/auth.api";
+} from "@/services/auth/auth.service";
 import { tokenStorage } from "@/lib/authToken";
 
 export const Providers = ({ children }) => {

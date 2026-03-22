@@ -1,5 +1,5 @@
-import axios from "@/lib/axios";
-import { fetchUserProfile } from "@/features/auth/api/auth.api";
+import axios from "@/services/apiClient";
+import { fetchUserProfile } from "@/services/auth/auth.service";
 // Lấy thông tin user hiện tại
 export const fetchUserInfo = fetchUserProfile;
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import InputField from "@/components/ui/InputField"; // Dùng lại component cũ
+import InputField from "@/components/ui/InputField";
 import { loginSchema } from "@/lib/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -40,7 +40,6 @@ const LoginPage = () => {
       alert(`Login successful! Welcome ${data.username}`);
       navigate("/");
     } catch (err) {
-      // Xử lý lỗi Object từ Backend như đã làm ở Register
       const backendDetail = err.response?.data?.detail;
       setError(
         Array.isArray(backendDetail)

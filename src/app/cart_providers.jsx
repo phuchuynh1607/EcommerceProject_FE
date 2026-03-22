@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
-import { getCart } from "@/features/cart/api/cart.api";
+import { getCart } from "@/services/cart/cart.service";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { CartContext } from "@/features/cart/Context/cartContext";
+import { CartContext } from "@/context/cartContext";
 import {
   addToCartApi,
   updateCartQuantity as updateCartApi,
   deleteCartItem as deleteCartApi,
-} from "@/features/cart/api/cart.api";
+} from "@/services/cart/cart.service";
 
 export const CartProvider = ({ children }) => {
   const { user } = useAuth();
